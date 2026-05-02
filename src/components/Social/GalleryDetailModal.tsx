@@ -70,6 +70,31 @@ export function GalleryDetailModal({ item, mode = 'public', onClose, onToggleLik
     }
   };
 
+  const handleRefSize = () => {
+    const sizeParams: Partial<TableParameters> = {
+      tableLength: item.parameters.tableLength,
+      tableWidth: item.parameters.tableWidth,
+      cornerRadius: item.parameters.cornerRadius,
+      legHeight: item.parameters.legHeight,
+      legWidth: item.parameters.legWidth,
+    };
+    setParameters(sizeParams);
+    setViewMode('editor');
+    onClose();
+  };
+
+  const handleRefMaterial = () => {
+    const materialParams: Partial<TableParameters> = {
+      materialCategory: item.parameters.materialCategory,
+      colorHue: item.parameters.colorHue,
+      metalness: item.parameters.metalness,
+      roughness: item.parameters.roughness,
+    };
+    setParameters(materialParams);
+    setViewMode('editor');
+    onClose();
+  };
+
   const nextImage = () => setActiveImageIndex((prev) => (prev + 1) % displayImages.length);
   const prevImage = () => setActiveImageIndex((prev) => (prev - 1 + displayImages.length) % displayImages.length);
 
@@ -291,8 +316,31 @@ export function GalleryDetailModal({ item, mode = 'public', onClose, onToggleLik
                 </Button>
               </div>
             ) : (
-              <div className="flex justify-center text-[10px] text-slate-300 font-medium uppercase tracking-widest">
-                浏览灵感 · 激发创意
+              <div className="flex gap-4">
+                <Button 
+                  onClick={handleRefSize}
+                  className="flex-1 rounded-2xl h-14 bg-slate-50 hover:bg-slate-100 text-slate-800 border-none flex items-center justify-center gap-3 font-bold transition-all hover:scale-[1.02] active:scale-95 group"
+                >
+                  <div className="w-9 h-9 bg-cyan-500/10 rounded-xl flex items-center justify-center text-cyan-600 group-hover:scale-110 transition-transform">
+                    <Ruler size={18} />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs">参考尺寸规格</p>
+                    <p className="text-[9px] text-slate-400 font-medium uppercase tracking-tighter">Sync Geometry</p>
+                  </div>
+                </Button>
+                <Button 
+                  onClick={handleRefMaterial}
+                  className="flex-1 rounded-2xl h-14 bg-slate-50 hover:bg-slate-100 text-slate-800 border-none flex items-center justify-center gap-3 font-bold transition-all hover:scale-[1.02] active:scale-95 group"
+                >
+                  <div className="w-9 h-9 bg-cyan-500/10 rounded-xl flex items-center justify-center text-cyan-600 group-hover:scale-110 transition-transform">
+                    <Palette size={18} />
+                  </div>
+                  <div className="text-left">
+                    <p className="text-xs">参考颜色材质</p>
+                    <p className="text-[9px] text-slate-400 font-medium uppercase tracking-tighter">Sync Material</p>
+                  </div>
+                </Button>
               </div>
             )}
           </div>
